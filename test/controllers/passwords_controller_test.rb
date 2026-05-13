@@ -49,6 +49,15 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_notice "Password has been reset"
   end
 
+  test "update destroys existing sessions" do
+    @user.sessions.create!
+
+    assert_difference -> { @user.sessions.count }, -1 do
+      put password_path(@user.password_reset_token), params: { password: "new", password_confirmation: "new" }
+      assert_redirected_to new_session_path
+    end
+  end
+
   test "update with non matching passwords" do
     token = @user.password_reset_token
     assert_no_changes -> { @user.reload.password_digest } do

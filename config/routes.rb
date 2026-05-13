@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
   root "landing#index"
 
-  resources :photos, only: :index
+  get "login", to: "sessions#new", as: :login
+  delete "logout", to: "sessions#destroy", as: :logout
+  get "signup", to: "users#new", as: :signup
+
+  resources :photos, only: %i[index show] do
+    resource :like, only: %i[create destroy]
+  end
 
   resource :session, only: %i[new create destroy]
   resources :users, only: %i[new create]
