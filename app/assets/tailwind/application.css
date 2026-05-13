@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+@theme {
+  --color-clever: #0075EB;
+  --color-clever-50: #eef7ff;
+  --color-clever-100: #d9edff;
+  --color-clever-200: #bce0ff;
+  --color-clever-300: #8ecfff;
+  --color-clever-400: #58b6ff;
+  --color-clever-500: #309bff;
+  --color-clever-600: #1b7cf4;
+  --color-clever-700: #1162de;
+  --color-clever-800: #134db6;
+  --color-clever-900: #15428f;
+  --color-clever-950: #122a57;
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-clever-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-clever-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-clever-100 dark:focus-visible:ring-clever-900;
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-900 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-gray-100 dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-700 dark:focus-visible:ring-zinc-800;
+  }
+
+  .input-field {
+    @apply block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-clever-500 focus:ring-clever-500 focus:outline-none dark:bg-zinc-900 dark:border-zinc-700 dark:text-zinc-100 dark:focus:border-clever-500 dark:focus:ring-clever-500 placeholder:text-gray-400 dark:placeholder:text-zinc-500;
+  }
+}

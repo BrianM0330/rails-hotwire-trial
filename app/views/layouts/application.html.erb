@@ -1,31 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title><%= content_for(:title) || "Gallery Network" %></title>
+    <title><%= content_for(:title) || "Clever Photos" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Gallery Network">
+    <meta name="application-name" content="Clever Photos">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-stone-50 text-stone-950">
-    <main class="min-h-screen">
+  <body class="bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100 antialiased font-sans flex flex-col min-h-screen transition-colors duration-200">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-clever-600 rounded-br-lg shadow-md">
+      Skip to main content
+    </a>
+
+    <%= render "shared/navbar" %>
+    <%= render "shared/flash" %>
+
+    <main id="main-content" class="flex-1 focus:outline-none" tabindex="-1">
       <%= yield %>
     </main>
+
+    <footer class="bg-white dark:bg-zinc-950 border-t border-gray-100 dark:border-zinc-900 py-8 mt-auto transition-colors duration-200">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500 dark:text-zinc-500">
+        &copy; <%= Time.current.year %> Clever Real Estate. Internal Use Only.
+      </div>
+    </footer>
   </body>
 </html>

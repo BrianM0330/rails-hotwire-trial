@@ -1,40 +1,64 @@
-<% content_for :title, "Sign up" %>
+<% content_for :title, "Join - Clever Photos" %>
 
-<div class="mx-auto w-full px-6 py-12 md:w-2/3 lg:w-1/2">
-  <h1 class="text-4xl font-bold">Sign up</h1>
+<div class="flex min-h-[80vh] flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Join the network</h2>
+    <p class="mt-2 text-center text-sm text-gray-600 dark:text-zinc-400">
+      Already have an account?
+      <%= link_to "Sign in", new_session_path, class: "font-medium text-clever-600 dark:text-clever-400 hover:text-clever-500 transition rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-clever-500" %>
+    </p>
+  </div>
 
-  <% if @user.errors.any? %>
-    <div class="mt-6 rounded-lg bg-red-50 px-4 py-3 text-red-700">
-      <p class="font-medium">Please fix the following:</p>
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white dark:bg-zinc-900 px-4 py-8 shadow-sm sm:rounded-xl sm:px-10 border border-gray-100 dark:border-zinc-800 transition-colors duration-200">
+      <% if @user.errors.any? %>
+        <div class="mb-6 rounded-lg bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 p-4" role="alert">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-red-400 dark:text-red-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-red-800 dark:text-red-200">Please fix the following issues:</h3>
+              <div class="mt-2 text-sm text-red-700 dark:text-red-300">
+                <ul role="list" class="list-disc space-y-1 pl-5">
+                  <% @user.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
 
-      <ul class="mt-2 list-disc space-y-1 pl-5 text-sm">
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+      <%= form_with model: @user, class: "space-y-6" do |form| %>
+        <div>
+          <%= form.label :email_address, "Email address", class: "block text-sm font-medium text-gray-700 dark:text-zinc-300" %>
+          <div class="mt-2">
+            <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "you@example.com", class: "input-field" %>
+          </div>
+        </div>
+
+        <div>
+          <%= form.label :password, "Password", class: "block text-sm font-medium text-gray-700 dark:text-zinc-300" %>
+          <div class="mt-2">
+            <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Create a strong password", maxlength: 72, class: "input-field" %>
+          </div>
+        </div>
+
+        <div>
+          <%= form.label :password_confirmation, "Confirm password", class: "block text-sm font-medium text-gray-700 dark:text-zinc-300" %>
+          <div class="mt-2">
+            <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Confirm your password", maxlength: 72, class: "input-field" %>
+          </div>
+        </div>
+
+        <div>
+          <%= form.submit "Create account", class: "btn-primary w-full cursor-pointer" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <%= form_with model: @user, class: "mt-8 contents" do |form| %>
-    <div class="my-5">
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", class: "block w-full rounded-md border border-gray-400 px-3 py-2 shadow-sm focus:outline-blue-600" %>
-    </div>
-
-    <div class="my-5">
-      <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Create a password", maxlength: 72, class: "block w-full rounded-md border border-gray-400 px-3 py-2 shadow-sm focus:outline-blue-600" %>
-    </div>
-
-    <div class="my-5">
-      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Confirm your password", maxlength: 72, class: "block w-full rounded-md border border-gray-400 px-3 py-2 shadow-sm focus:outline-blue-600" %>
-    </div>
-
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
-      <%= form.submit "Create account", class: "w-full cursor-pointer rounded-md bg-blue-600 px-3.5 py-2.5 text-center font-medium text-white hover:bg-blue-500 sm:w-auto" %>
-
-      <p class="text-sm text-gray-600">
-        Already have an account?
-        <%= link_to "Sign in", new_session_path, class: "font-medium text-gray-900 underline hover:no-underline" %>
-      </p>
-    </div>
-  <% end %>
+  </div>
 </div>
