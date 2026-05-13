@@ -1,8 +1,8 @@
 class CreateLikes < ActiveRecord::Migration[8.1]
   def change
     create_table :likes do |t|
-      t.references :user, null: false, foreign_key: true
-      t.references :photo, null: false, foreign_key: true
+      t.references :user, null: false, foreign_key: { on_delete: :cascade }
+      t.references :photo, null: false, foreign_key: { on_delete: :cascade }
 
       t.timestamps
     end
