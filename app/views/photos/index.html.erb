@@ -1,0 +1,23 @@
+<% content_for :title, "Photos" %>
+
+<section class="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-6 py-8 sm:px-10">
+  <header class="flex items-center justify-between gap-4">
+    <%= link_to "Gallery Network", root_path, class: "text-lg font-semibold tracking-tight" %>
+
+    <%= button_to "Sign out", session_path, method: :delete, class: "rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-700 transition hover:border-stone-950 hover:text-stone-950" %>
+  </header>
+
+  <div class="flex flex-1 items-center py-20">
+    <div class="max-w-2xl">
+      <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-amber-700">Private gallery</p>
+
+      <h1 class="text-4xl font-bold tracking-tight text-stone-950 sm:text-6xl">
+        Photos will live here.
+      </h1>
+
+      <p class="mt-6 text-lg leading-8 text-stone-600">
+        This page is protected by the existing Rails session authentication. If you are signed out, Rails redirects you to the login form before rendering this page.
+      </p>
+    </div>
+  </div>
+</section>
