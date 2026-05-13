@@ -21,10 +21,40 @@
   }
   
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-900 transition hover:bg-gray-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-gray-100 dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-700 dark:focus-visible:ring-zinc-800;
+    @apply inline-flex items-center justify-center rounded-lg border border-zinc-300 bg-white px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:bg-zinc-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-zinc-100 dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-700 dark:focus-visible:ring-zinc-800;
   }
 
   .input-field {
-    @apply block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-clever-500 focus:ring-clever-500 focus:outline-none dark:bg-zinc-900 dark:border-zinc-700 dark:text-zinc-100 dark:focus:border-clever-500 dark:focus:ring-clever-500 placeholder:text-gray-400 dark:placeholder:text-zinc-500;
+    @apply block w-full rounded-lg border border-zinc-300 bg-zinc-50 p-2.5 text-zinc-900 focus:border-clever-500 focus:ring-clever-500 focus:outline-none dark:bg-zinc-900 dark:border-zinc-700 dark:text-zinc-100 dark:focus:border-clever-500 dark:focus:ring-clever-500 placeholder:text-zinc-400 dark:placeholder:text-zinc-500;
+  }
+}
+
+@layer utilities {
+  .animate-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+  
+  .delay-150 { animation-delay: 150ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-450 { animation-delay: 450ms; }
+  .delay-600 { animation-delay: 600ms; }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .mask-glow-sweep {
+    -webkit-mask-image: linear-gradient(60deg, rgba(0,0,0,0.2) 20%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.2) 80%);
+    mask-image: linear-gradient(60deg, rgba(0,0,0,0.2) 20%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.2) 80%);
+    -webkit-mask-size: 300% 100%;
+    mask-size: 300% 100%;
+    animation: mask-sweep 6s linear infinite;
+  }
+
+  @keyframes mask-sweep {
+    0% { -webkit-mask-position: 200% center; mask-position: 200% center; }
+    100% { -webkit-mask-position: -100% center; mask-position: -100% center; }
   }
 }
