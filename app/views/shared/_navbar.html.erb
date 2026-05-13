@@ -15,7 +15,7 @@
           <div class="h-5 w-px bg-white/10" aria-hidden="true"></div>
           <%= button_to "Sign out", session_path, method: :delete, class: "text-sm font-medium text-zinc-400 hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-clever-500 rounded px-2 py-1" %>
         <% else %>
-          <%= link_to "Sign in", new_session_path, class: "text-sm font-medium text-zinc-400 hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-clever-500 rounded px-2 py-1" %>
+          <%= link_to "Sign in", photos_path, class: "text-sm font-medium text-zinc-400 hover:text-white transition focus:outline-none focus-visible:ring-2 focus-visible:ring-clever-500 rounded px-2 py-1" %>
         <% end %>
       </div>
     </div>
