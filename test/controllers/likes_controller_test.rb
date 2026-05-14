@@ -9,7 +9,7 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
   test "create redirects unauthenticated users to sign in" do
     post photo_like_path(@photo)
 
-    assert_redirected_to new_session_path
+    assert_redirected_to login_path
   end
 
   test "create adds like for authenticated user" do
@@ -19,7 +19,7 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
       post photo_like_path(@photo)
     end
 
-    assert_redirected_to photo_path(@photo)
+    assert_redirected_to photos_path
   end
 
   test "create is idempotent for the same user and photo" do
@@ -30,7 +30,7 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
       post photo_like_path(@photo)
     end
 
-    assert_redirected_to photo_path(@photo)
+    assert_redirected_to photos_path
   end
 
   test "destroy removes existing like for authenticated user" do
@@ -41,7 +41,7 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
       delete photo_like_path(@photo)
     end
 
-    assert_redirected_to photo_path(@photo)
+    assert_redirected_to photos_path
   end
 
   test "destroy is safe when like does not exist" do
@@ -51,13 +51,13 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
       delete photo_like_path(@photo)
     end
 
-    assert_redirected_to photo_path(@photo)
+    assert_redirected_to photos_path
   end
 
   test "destroy redirects unauthenticated users to sign in" do
     delete photo_like_path(@photo)
 
-    assert_redirected_to new_session_path
+    assert_redirected_to login_path
   end
 
   test "create raises not found for missing photo" do

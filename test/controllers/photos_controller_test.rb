@@ -5,10 +5,13 @@ class PhotosControllerTest < ActionDispatch::IntegrationTest
     @photo = create_photo
   end
 
-  test "index redirects unauthenticated users to sign in" do
+  test "index renders paywalled gallery for unauthenticated users" do
     get photos_path
 
-    assert_redirected_to new_session_path
+    assert_response :success
+    assert_select "h1", "All Photos"
+    assert_select "p", text: "Premium Gallery Access", minimum: 1
+    assert_select "img.blur-xl", minimum: 1
   end
 
   test "index renders for authenticated users" do
@@ -17,12 +20,16 @@ class PhotosControllerTest < ActionDispatch::IntegrationTest
     get photos_path
 
     assert_response :success
+    assert_select "h1", "All Photos"
+    assert_select "p", text: "Premium Gallery Access", count: 0
+    assert_select "a[href='#{photo_path(@photo)}']", minimum: 1
   end
 
   test "show renders for unauthenticated users" do
     get photo_path(@photo)
 
     assert_response :success
+    assert_select "h2", "Premium Gallery Access"
   end
 
   test "show renders for authenticated users" do
@@ -31,15 +38,18 @@ class PhotosControllerTest < ActionDispatch::IntegrationTest
     get photo_path(@photo)
 
     assert_response :success
+    assert_select "h2", text: "Premium Gallery Access", count: 0
   end
 
-  test "index redirects back after sign in" do
+  test "index renders an empty state when no photos exist" do
+    Comment.delete_all
+    Like.delete_all
+    Photo.delete_all
+
     get photos_path
-    assert_redirected_to new_session_path
 
-    post session_path, params: { email_address: users(:one).email_address, password: "password" }
-
-    assert_redirected_to photos_url
+    assert_response :success
+    assert_select "h2", "No photos yet"
   end
 
   private

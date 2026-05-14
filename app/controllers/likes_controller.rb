@@ -3,20 +3,12 @@ class LikesController < ApplicationController
 
   def create
     Current.user.likes.create_or_find_by(photo: @photo)
-
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to @photo }
-    end
+    redirect_back fallback_location: photos_path
   end
 
   def destroy
     Current.user.likes.find_by(photo: @photo)&.destroy
-
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to @photo }
-    end
+    redirect_back fallback_location: photos_path
   end
 
   private

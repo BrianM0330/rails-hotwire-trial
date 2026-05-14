@@ -1,0 +1,21 @@
+one:
+  pexels_id: 1000
+  width: 100
+  height: 100
+  url: "https://pexels.com/1000"
+  photographer: "Alice"
+  photographer_url: "https://pexels.com/@alice"
+  photographer_id: 1
+  avg_color: "#ffffff"
+  alt: "A photo"
+
+two:
+  pexels_id: 2000
+  width: 100
+  height: 100
+  url: "https://pexels.com/2000"
+  photographer: "Bob"
+  photographer_url: "https://pexels.com/@bob"
+  photographer_id: 2
+  avg_color: "#000000"
+  alt: "Another photo"

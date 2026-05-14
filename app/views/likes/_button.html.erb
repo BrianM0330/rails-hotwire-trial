@@ -1,0 +1,22 @@
+<%= tag.div id: dom_id(photo, :like) do %>
+  <% icon = liked ? "star-fill.svg" : "star-line.svg" %>
+  <% label = liked ? "Unlike photo by #{photo.photographer}" : "Like photo by #{photo.photographer}" %>
+  <% method = liked ? :delete : :post %>
+
+  <% if authenticated? %>
+    <%= button_to photo_like_path(photo),
+      method: method,
+      aria: { label: label, pressed: liked },
+      class: "inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm ring-1 ring-black/5 backdrop-blur transition hover:bg-white hover:text-clever-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-clever-500 dark:bg-zinc-950/85 dark:text-zinc-100 dark:ring-white/10 dark:hover:bg-zinc-950" do %>
+      <%= image_tag icon, alt: "", aria: { hidden: true }, class: "h-5 w-5" %>
+      <span><%= photo.likes_count %></span>
+    <% end %>
+  <% else %>
+    <%= link_to login_path,
+      aria: { label: "Sign in to like photo by #{photo.photographer}" },
+      class: "inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm ring-1 ring-black/5 backdrop-blur transition hover:bg-white hover:text-clever-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-clever-500 dark:bg-zinc-950/85 dark:text-zinc-100 dark:ring-white/10 dark:hover:bg-zinc-950" do %>
+      <%= image_tag "star-line.svg", alt: "", aria: { hidden: true }, class: "h-5 w-5" %>
+      <span><%= photo.likes_count %></span>
+    <% end %>
+  <% end %>
+<% end %>
