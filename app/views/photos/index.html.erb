@@ -14,7 +14,7 @@
   </div>
 
   <% if @photos.any? %>
-    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" id="photos">
+    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" id="photos" data-controller="gallery-lightbox">
       <%= render partial: "photo", collection: @photos, as: :photo, locals: { liked_photo_ids: @liked_photo_ids } %>
     </div>
   <% else %>

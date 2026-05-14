@@ -1,6 +1,13 @@
 <article id="<%= dom_id(photo) %>" class="group">
   <div class="relative aspect-square overflow-hidden rounded-2xl border border-gray-100 bg-gray-100 shadow-sm transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-xl dark:border-zinc-800 dark:bg-zinc-900" style="background-color: <%= photo.avg_color %>">
-    <%= link_to photo_path(photo), class: "block h-full w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-clever-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950", aria: { label: "View #{photo.alt}" } do %>
+    <%= link_to photo.src_large2x,
+      class: "block h-full w-full cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-clever-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950",
+      aria: { label: "Open #{photo.alt}" },
+      data: {
+        pswp_width: photo.width,
+        pswp_height: photo.height,
+        pswp_caption: "By #{photo.photographer}"
+      } do %>
       <%= image_tag photo.src_medium,
         alt: photo.alt,
         class: "h-full w-full object-cover",
@@ -18,13 +25,19 @@
         <span class="font-normal text-gray-500 dark:text-zinc-500">By</span>
         <span class="font-semibold"><%= photo.photographer %></span>
       </h2>
-      <%= link_to photo.url,
-        target: "_blank",
-        rel: "noopener noreferrer",
-        class: "mt-1.5 inline-flex max-w-full items-center gap-1.5 text-sm font-normal leading-none text-gray-500 transition hover:text-clever-600 dark:text-zinc-400 dark:hover:text-clever-400" do %>
-        <%= image_tag "links.svg", alt: "", aria: { hidden: true }, class: "h-4 w-4 shrink-0 opacity-90" %>
-        <span class="truncate"><%= photo.url %></span>
-      <% end %>
+      <div class="relative mt-1.5 flex max-w-full items-center gap-2" data-controller="copy-source" data-copy-source-url-value="<%= photo.url %>">
+        <button type="button" class="inline-flex shrink-0 cursor-pointer items-center justify-center text-zinc-500 transition hover:text-zinc-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-clever-500 dark:text-zinc-500 dark:hover:text-zinc-200" data-action="copy-source#copy" aria-label="Copy source URL for photo by <%= photo.photographer %>">
+          <%= inline_svg "copy.svg", css_class: "h-4 w-4", aria: { hidden: true } %>
+        </button>
+        <span class="hidden absolute -top-8 left-0 rounded-full bg-zinc-950 px-2.5 py-1 text-xs font-medium text-white shadow-sm dark:bg-white dark:text-zinc-950" data-copy-source-target="toast" role="status" aria-live="polite">Copied</span>
+        <%= link_to photo.url,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          class: "inline-flex min-w-0 items-center gap-1.5 text-sm font-normal leading-none text-zinc-500 transition hover:text-clever-400" do %>
+          <%= image_tag "links.svg", alt: "", aria: { hidden: true }, class: "h-4 w-4 shrink-0 opacity-80" %>
+          <span class="truncate"><%= photo.url %></span>
+        <% end %>
+      </div>
     </div>
   </div>
 </article>
