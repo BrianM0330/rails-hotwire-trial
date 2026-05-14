@@ -1,0 +1,49 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "b4f65ededd3391a9680636acf13360aea1463943b27bfd8c30e197c78968cf23",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in `link_to` href",
+      "file": "app/views/photos/_photo.html.erb",
+      "line": 18,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(Photo.new.url, :target => \"_blank\", :rel => \"noopener noreferrer\", :class => \"mt-1 inline-flex max-w-full items-center gap-1.5 text-sm text-gray-500 transition hover:text-clever-600 dark:text-zinc-400 dark:hover:text-clever-400\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "PhotosController",
+          "method": "index",
+          "line": 10,
+          "file": "app/controllers/photos_controller.rb",
+          "rendered": {
+            "name": "photos/index",
+            "file": "app/views/photos/index.html.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "photos/index",
+          "line": 9,
+          "file": "app/views/photos/index.html.erb",
+          "rendered": {
+            "name": "photos/_photo",
+            "file": "app/views/photos/_photo.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "photos/_photo"
+      },
+      "user_input": "Photo.new.url",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    }
+  ],
+  "brakeman_version": "8.0.4"
+}
