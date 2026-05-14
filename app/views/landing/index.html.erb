@@ -26,10 +26,14 @@
           class:
             "btn-primary text-base px-10 py-4 w-full sm:w-auto shadow-lg shadow-clever-500/20" %>
         <% else %>
+          <%= link_to "Join the network",
+          signup_path,
+          class:
+            "btn-primary text-base px-8 py-3 w-full sm:w-auto shadow-lg shadow-clever-500/20" %>
           <%= link_to "Sign in to your gallery",
           login_path,
           class:
-            "btn-primary text-base px-8 py-3 w-full sm:w-auto shadow-lg shadow-clever-500/20" %>
+            "text-sm font-semibold text-gray-700 hover:text-gray-950 dark:text-zinc-300 dark:hover:text-white transition rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-clever-500" %>
         <% end %>
       </div>
       <!-- Hero Illustration -->
@@ -234,88 +238,6 @@
 
             </g>
           </svg>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div
-  class="
-    bg-gray-50 dark:bg-zinc-900/50 py-16 sm:py-24 transition-colors duration-200
-  "
->
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-2xl lg:max-w-none">
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Setting the standard</h2>
-
-      <div class="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
-        <div class="group relative">
-          <div
-            class="
-              relative h-80 w-full overflow-hidden rounded-2xl bg-white dark:bg-zinc-800
-              sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75
-              sm:h-64 transition shadow-sm border border-gray-100 dark:border-zinc-800
-            "
-          >
-            <div
-              class="
-                absolute inset-0 bg-gradient-to-br from-clever-100 to-gray-100
-                dark:from-clever-900/30 dark:to-zinc-800 mix-blend-multiply
-                dark:mix-blend-normal
-              "
-            ></div>
-          </div>
-          <h3 class="mt-6 text-sm text-gray-500 dark:text-zinc-400">
-            <span class="absolute inset-0"></span>
-            Interior
-          </h3>
-          <p class="text-base font-semibold text-gray-900 dark:text-zinc-200">Modern loft aesthetics</p>
-        </div>
-
-        <div class="group relative">
-          <div
-            class="
-              relative h-80 w-full overflow-hidden rounded-2xl bg-white dark:bg-zinc-800
-              sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75
-              sm:h-64 transition shadow-sm border border-gray-100 dark:border-zinc-800
-            "
-          >
-            <div
-              class="
-                absolute inset-0 bg-gradient-to-br from-gray-200 to-clever-50 dark:from-zinc-700
-                dark:to-clever-900/20 mix-blend-multiply dark:mix-blend-normal
-              "
-            ></div>
-          </div>
-          <h3 class="mt-6 text-sm text-gray-500 dark:text-zinc-400">
-            <span class="absolute inset-0"></span>
-            Architecture
-          </h3>
-          <p class="text-base font-semibold text-gray-900 dark:text-zinc-200">Natural light spaces</p>
-        </div>
-
-        <div class="group relative">
-          <div
-            class="
-              relative h-80 w-full overflow-hidden rounded-2xl bg-white dark:bg-zinc-800
-              sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75
-              sm:h-64 transition shadow-sm border border-gray-100 dark:border-zinc-800
-            "
-          >
-            <div
-              class="
-                absolute inset-0 bg-gradient-to-br from-clever-50 to-gray-200
-                dark:from-clever-900/15 dark:to-zinc-800 mix-blend-multiply
-                dark:mix-blend-normal
-              "
-            ></div>
-          </div>
-          <h3 class="mt-6 text-sm text-gray-500 dark:text-zinc-400">
-            <span class="absolute inset-0"></span>
-            Detail
-          </h3>
-          <p class="text-base font-semibold text-gray-900 dark:text-zinc-200">Texture and material</p>
         </div>
       </div>
     </div>
