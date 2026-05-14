@@ -1,4 +1,5 @@
 <% content_for :title, @photo.alt.presence || "Photo" %>
+<%= turbo_stream_from @photo %>
 
 <div class="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
   <%= link_to "Back to gallery", photos_path, class: "text-sm font-medium text-clever-600 hover:text-clever-700 dark:text-clever-400 dark:hover:text-clever-300" %>

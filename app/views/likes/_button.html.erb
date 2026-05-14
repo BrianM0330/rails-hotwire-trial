@@ -40,10 +40,6 @@
     data: {
       icon: icon.delete_suffix(".svg"),
     } %>
-    <span
-      class="
-        tabular-nums transition-transform duration-150 ease-out group-active:scale-95
-      "
-    ><%= photo.likes_count %></span>
+    <%= render "likes/count", photo: photo %>
   <% end %>
 </div>

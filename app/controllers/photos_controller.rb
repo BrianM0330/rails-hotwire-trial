@@ -11,7 +11,7 @@ class PhotosController < ApplicationController
 
   private
     def liked_photo_ids_for(photos)
-      return Set.new unless Current.user
+      return Set.new unless authenticated?
 
       Current.user.likes.where(photo: photos).pluck(:photo_id).to_set
     end

@@ -1,6 +1,8 @@
 require "test_helper"
 
 class LikeTest < ActiveSupport::TestCase
+  include ActionCable::TestHelper
+
   test "increments photo likes_count" do
     photo = create_photo
 
@@ -16,6 +18,18 @@ class LikeTest < ActiveSupport::TestCase
 
     assert_raises ActiveRecord::RecordNotUnique do
       Like.create!(user: users(:one), photo:)
+    end
+  end
+
+  test "broadcasts like count after create and destroy" do
+    photo = create_photo
+
+    assert_broadcasts "photos", 1 do
+      @like = Like.create!(user: users(:one), photo:)
+    end
+
+    assert_broadcasts "photos", 1 do
+      @like.destroy!
     end
   end
 
