@@ -30,12 +30,11 @@ module Authentication
     end
 
     def request_authentication
-      session[:return_to_after_authenticating] = request.url if request.get?
       redirect_to login_path
     end
 
     def after_authentication_url
-      session.delete(:return_to_after_authenticating) || root_url
+      photos_url
     end
 
     def start_new_session_for(user)
