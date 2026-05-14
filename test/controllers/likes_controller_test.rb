@@ -22,6 +22,20 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to photos_path
   end
 
+  test "create replaces like button for turbo stream request" do
+    sign_in_as(@user)
+
+    assert_difference -> { @user.likes.count }, 1 do
+      post photo_like_path(@photo), headers: turbo_stream_headers
+    end
+
+    assert_response :success
+    assert_equal "text/vnd.turbo-stream.html", response.media_type
+    assert_includes response.body, %(<turbo-stream action="replace" target="like_photo_#{@photo.id}")
+    assert_includes response.body, "Unlike photo by #{@photo.photographer}"
+    assert_includes response.body, %(data-icon="star-fill")
+  end
+
   test "create is idempotent for the same user and photo" do
     sign_in_as(@user)
     @user.likes.create!(photo: @photo)
@@ -42,6 +56,21 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to photos_path
+  end
+
+  test "destroy replaces like button for turbo stream request" do
+    sign_in_as(@user)
+    @user.likes.create!(photo: @photo)
+
+    assert_difference -> { @user.likes.count }, -1 do
+      delete photo_like_path(@photo), headers: turbo_stream_headers
+    end
+
+    assert_response :success
+    assert_equal "text/vnd.turbo-stream.html", response.media_type
+    assert_includes response.body, %(<turbo-stream action="replace" target="like_photo_#{@photo.id}")
+    assert_includes response.body, "Like photo by #{@photo.photographer}"
+    assert_includes response.body, %(data-icon="star-line")
   end
 
   test "destroy is safe when like does not exist" do
@@ -81,5 +110,9 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
         avg_color: "#333831",
         alt: "A small island surrounded by trees in the middle of a lake"
       }.merge(attributes))
+    end
+
+    def turbo_stream_headers
+      { "Accept" => "text/vnd.turbo-stream.html", "Turbo-Frame" => "like_photo_#{@photo.id}" }
     end
 end

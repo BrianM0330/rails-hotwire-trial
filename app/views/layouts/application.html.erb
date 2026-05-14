@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title><%= content_for(:title) || "Clever Photos" %></title>
+    <title><%= content_for(:title) || "B. Mendoza - Clever Gallery" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Clever Photos">
@@ -18,8 +18,19 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100 antialiased font-sans flex flex-col min-h-screen transition-colors duration-200">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-clever-600 rounded-br-lg shadow-md">
+  <body
+    class="
+      bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100 antialiased
+      font-sans flex flex-col min-h-screen transition-colors duration-200
+    "
+  >
+    <a
+      href="#main-content"
+      class="
+        sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white
+        focus:text-clever-600 rounded-br-lg shadow-md
+      "
+    >
       Skip to main content
     </a>
 
@@ -30,9 +41,21 @@
       <%= yield %>
     </main>
 
-    <footer class="bg-white dark:bg-zinc-950 border-t border-gray-100 dark:border-zinc-900 py-8 mt-auto transition-colors duration-200">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500 dark:text-zinc-500">
-        &copy; <%= Time.current.year %> Clever Real Estate. Internal Use Only.
+    <footer
+      class="
+        bg-white dark:bg-zinc-950 border-t border-gray-100 dark:border-zinc-900 py-8
+        mt-auto transition-colors duration-200
+      "
+    >
+      <div
+        class="
+          mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500
+          dark:text-zinc-500
+        "
+      >
+        &copy;
+        <%= Time.current.year %>
+        Clever Real Estate. Internal Use Only.
       </div>
     </footer>
   </body>

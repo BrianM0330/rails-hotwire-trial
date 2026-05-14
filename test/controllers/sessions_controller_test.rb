@@ -11,7 +11,10 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "new" do
     get login_path
+
     assert_response :success
+    assert_select "a[href='#{signup_path}']", count: 0
+    assert_select "a[href='#{new_password_path}']", count: 0
   end
 
   test "new redirects authenticated users to photos" do
@@ -25,18 +28,26 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   test "create with valid credentials" do
     post login_path, params: { email_address: @user.email_address, password: "password" }
 
-    assert_redirected_to root_path
+    assert_redirected_to photos_path
     assert cookies[:session_id]
   end
 
-  test "create does not redirect back to protected non-get requests" do
+  test "create ignores attempted protected destination" do
     post photo_like_path(photos(:one))
     assert_redirected_to login_path
 
     post login_path, params: { email_address: @user.email_address, password: "password" }
 
-    assert_redirected_to root_path
+    assert_redirected_to photos_path
     assert cookies[:session_id]
+  end
+
+  test "create redirects authenticated users to photos" do
+    sign_in_as(@user)
+
+    post login_path, params: { email_address: @user.email_address, password: "password" }
+
+    assert_redirected_to photos_path
   end
 
   test "create with invalid credentials" do
@@ -52,7 +63,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
     delete logout_path
 
-    assert_redirected_to login_path
+    assert_redirected_to root_path
     assert_empty cookies[:session_id]
     assert_not Session.exists?(session.id)
   end

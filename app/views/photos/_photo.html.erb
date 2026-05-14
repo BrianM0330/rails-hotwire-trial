@@ -3,32 +3,26 @@
     <%= link_to photo_path(photo), class: "block h-full w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-clever-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950", aria: { label: "View #{photo.alt}" } do %>
       <%= image_tag photo.src_medium,
         alt: photo.alt,
-        class: "h-full w-full object-cover transition duration-500 group-hover:scale-105 #{authenticated? ? "" : "blur-xl scale-105 opacity-80"}",
+        class: "h-full w-full object-cover",
         loading: "lazy" %>
     <% end %>
 
-    <% unless authenticated? %>
-      <div class="absolute inset-0 flex items-center justify-center bg-white/20 p-4 text-center backdrop-blur-[1px] dark:bg-zinc-950/30">
-        <div class="rounded-xl bg-white/90 px-4 py-3 shadow-lg ring-1 ring-black/5 dark:bg-zinc-900/90 dark:ring-white/10">
-          <p class="text-sm font-semibold text-gray-900 dark:text-white">Premium Gallery Access</p>
-          <%= link_to "Sign in to view", login_path, class: "mt-1 inline-block text-sm font-medium text-clever-600 hover:text-clever-700 dark:text-clever-400" %>
-        </div>
-      </div>
-    <% end %>
-
-    <div class="absolute right-3 top-3">
+    <div class="absolute right-3 top-3 z-10">
       <%= render "likes/button", photo: photo, liked: liked_photo_ids.include?(photo.id) %>
     </div>
   </div>
 
-  <div class="mt-3 flex items-start justify-between gap-3">
+  <div class="mt-3.5 flex items-start justify-between gap-3">
     <div class="min-w-0">
-      <h2 class="truncate text-sm font-semibold text-gray-900 dark:text-zinc-100"><%= photo.photographer %></h2>
+      <h2 class="truncate text-sm font-medium tracking-tight text-gray-900 dark:text-zinc-100">
+        <span class="font-normal text-gray-500 dark:text-zinc-500">By</span>
+        <span class="font-semibold"><%= photo.photographer %></span>
+      </h2>
       <%= link_to photo.url,
         target: "_blank",
         rel: "noopener noreferrer",
-        class: "mt-1 inline-flex max-w-full items-center gap-1.5 text-sm text-gray-500 transition hover:text-clever-600 dark:text-zinc-400 dark:hover:text-clever-400" do %>
-        <%= image_tag "links.svg", alt: "", aria: { hidden: true }, class: "h-4 w-4 shrink-0" %>
+        class: "mt-1.5 inline-flex max-w-full items-center gap-1.5 text-sm font-normal leading-none text-gray-500 transition hover:text-clever-600 dark:text-zinc-400 dark:hover:text-clever-400" do %>
+        <%= image_tag "links.svg", alt: "", aria: { hidden: true }, class: "h-4 w-4 shrink-0 opacity-90" %>
         <span class="truncate"><%= photo.url %></span>
       <% end %>
     </div>

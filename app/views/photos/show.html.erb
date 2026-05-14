@@ -4,36 +4,16 @@
   <%= link_to "Back to gallery", photos_path, class: "text-sm font-medium text-clever-600 hover:text-clever-700 dark:text-clever-400 dark:hover:text-clever-300" %>
 
   <div class="relative mt-6 overflow-hidden rounded-2xl bg-gray-100 dark:bg-zinc-900" style="background-color: <%= @photo.avg_color %>">
-    <% if authenticated? %>
-      <%= image_tag @photo.src_large2x,
-        alt: @photo.alt,
-        class: "h-auto w-full block",
-        loading: "lazy" %>
-    <% else %>
-      <%= image_tag @photo.src_large2x,
-        alt: @photo.alt,
-        class: "h-auto w-full block blur-xl scale-105 opacity-80 pointer-events-none select-none",
-        loading: "lazy" %>
-      
-      <div class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/30 dark:bg-zinc-950/40 backdrop-blur-[2px] p-6 text-center">
-        <div class="bg-white/90 dark:bg-zinc-900/90 shadow-2xl ring-1 ring-zinc-900/5 dark:ring-white/10 rounded-2xl p-8 max-w-md backdrop-blur-md">
-          <h2 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mb-2">Premium Gallery Access</h2>
-          <p class="text-sm text-gray-600 dark:text-zinc-400 mb-8">
-            This photo is part of the Clever Real Estate exclusive network. Sign in or join to view high-resolution photography, save your favorites, and more.
-          </p>
-          <div class="flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <%= link_to "Join the network", signup_path, class: "btn-primary shadow-lg shadow-clever-500/20" %>
-            <%= link_to "Sign in", login_path, class: "btn-secondary" %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+    <%= image_tag @photo.src_large2x,
+      alt: @photo.alt,
+      class: "h-auto w-full block",
+      loading: "lazy" %>
   </div>
 
   <div class="mt-6 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
     <div>
       <h1 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"><%= @photo.alt.presence || "Untitled photo" %></h1>
-      <p class="mt-1 text-sm text-gray-500 dark:text-zinc-400">Photograph by <%= @photo.photographer %></p>
+      <p class="mt-1 text-sm text-gray-500 dark:text-zinc-400">By <span class="font-medium text-gray-700 dark:text-zinc-300"><%= @photo.photographer %></span></p>
       <%= link_to @photo.url,
         target: "_blank",
         rel: "noopener noreferrer",

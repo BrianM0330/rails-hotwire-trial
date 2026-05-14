@@ -1,0 +1,1 @@
+<%= turbo_stream.replace dom_id(@photo, :like), partial: "likes/button", locals: { photo: @photo, liked: @liked } %>

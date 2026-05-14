@@ -4,7 +4,8 @@ class PhotosTest < ApplicationSystemTestCase
   setup do
     @user = users(:one)
     @photo = photos(:two) # users(:one) does not like this photo yet
-    @user.likes.where(photo: @photo).delete_all
+    @user.likes.where(photo: @photo).destroy_all
+    @photo.update!(likes_count: @photo.likes.count)
   end
 
   test "signed in user can like from the gallery" do
@@ -19,8 +20,13 @@ class PhotosTest < ApplicationSystemTestCase
     # Go to photos grid
     visit photos_path
 
-    find("#like_photo_#{@photo.id} button").click
+    find("#like_photo_#{@photo.id} button[aria-label='Like photo by #{@photo.photographer}']").click
 
     assert_selector "#like_photo_#{@photo.id} button[aria-label='Unlike photo by #{@photo.photographer}']"
+    assert_selector "#like_photo_#{@photo.id}", text: @photo.reload.likes_count.to_s
+
+    find("#like_photo_#{@photo.id} button[aria-label='Unlike photo by #{@photo.photographer}']").click
+
+    assert_selector "#like_photo_#{@photo.id} button[aria-label='Like photo by #{@photo.photographer}']"
   end
 end
