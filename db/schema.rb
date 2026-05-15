@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_13_201102) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_15_183100) do
   create_table "comments", force: :cascade do |t|
     t.text "body", null: false
     t.datetime "created_at", null: false
@@ -47,6 +47,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_13_201102) do
     t.string "url", null: false
     t.integer "width", null: false
     t.index ["pexels_id"], name: "index_photos_on_pexels_id", unique: true
+    t.check_constraint "comments_count >= 0", name: "photos_comments_count_non_negative"
+    t.check_constraint "height > 0", name: "photos_height_positive"
+    t.check_constraint "likes_count >= 0", name: "photos_likes_count_non_negative"
+    t.check_constraint "pexels_id > 0", name: "photos_pexels_id_positive"
+    t.check_constraint "photographer_id > 0", name: "photos_photographer_id_positive"
+    t.check_constraint "width > 0", name: "photos_width_positive"
   end
 
   create_table "sessions", force: :cascade do |t|
