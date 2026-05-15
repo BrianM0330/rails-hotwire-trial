@@ -8,6 +8,8 @@ one:
   photographer_id: 1
   avg_color: "#ffffff"
   alt: "A photo"
+  likes_count: 2
+  comments_count: 1
 
 two:
   pexels_id: 2000
@@ -19,3 +21,5 @@ two:
   photographer_id: 2
   avg_color: "#000000"
   alt: "Another photo"
+  likes_count: 0
+  comments_count: 0

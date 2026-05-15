@@ -16,9 +16,24 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(@user)
 
     assert_difference -> { @user.likes.count }, 1 do
+      assert_difference -> { @photo.reload.likes_count }, 1 do
+        post photo_like_path(@photo)
+      end
+    end
+
+    assert_redirected_to photos_path
+  end
+
+  test "create is current-user scoped when another user already liked the photo" do
+    users(:two).likes.create!(photo: @photo)
+    sign_in_as(@user)
+
+    assert_difference -> { @photo.likes.count }, 1 do
       post photo_like_path(@photo)
     end
 
+    assert @user.likes.exists?(photo: @photo)
+    assert users(:two).likes.exists?(photo: @photo)
     assert_redirected_to photos_path
   end
 
@@ -41,7 +56,9 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
     @user.likes.create!(photo: @photo)
 
     assert_no_difference -> { @user.likes.count } do
-      post photo_like_path(@photo)
+      assert_no_difference -> { @photo.reload.likes_count } do
+        post photo_like_path(@photo)
+      end
     end
 
     assert_redirected_to photos_path
@@ -52,10 +69,25 @@ class LikesControllerTest < ActionDispatch::IntegrationTest
     @user.likes.create!(photo: @photo)
 
     assert_difference -> { @user.likes.count }, -1 do
-      delete photo_like_path(@photo)
+      assert_difference -> { @photo.reload.likes_count }, -1 do
+        delete photo_like_path(@photo)
+      end
     end
 
     assert_redirected_to photos_path
+  end
+
+  test "destroy only removes the current user's like" do
+    @user.likes.create!(photo: @photo)
+    other_like = users(:two).likes.create!(photo: @photo)
+    sign_in_as(@user)
+
+    assert_difference -> { @photo.likes.count }, -1 do
+      delete photo_like_path(@photo)
+    end
+
+    assert_not @user.likes.exists?(photo: @photo)
+    assert Like.exists?(other_like.id)
   end
 
   test "destroy replaces like button for turbo stream request" do

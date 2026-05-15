@@ -13,7 +13,8 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     get login_path
 
     assert_response :success
-    assert_select "a[href='#{signup_path}']", count: 0
+    assert_select "h2", "Sign in to your account"
+    assert_select "a[href='#{signup_path}']", minimum: 1
     assert_select "a[href='#{new_password_path}']", count: 0
   end
 

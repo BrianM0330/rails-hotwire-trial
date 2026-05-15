@@ -35,6 +35,30 @@ class PhotoTest < ActiveSupport::TestCase
     assert_not_includes Photo.landscape, portrait
   end
 
+  test "database rejects non-positive dimensions" do
+    photo = create_photo
+
+    assert_raises ActiveRecord::StatementInvalid do
+      photo.update_columns(width: 0)
+    end
+
+    assert_raises ActiveRecord::StatementInvalid do
+      photo.update_columns(height: -1)
+    end
+  end
+
+  test "database rejects negative counter cache values" do
+    photo = create_photo
+
+    assert_raises ActiveRecord::StatementInvalid do
+      photo.update_columns(likes_count: -1)
+    end
+
+    assert_raises ActiveRecord::StatementInvalid do
+      photo.update_columns(comments_count: -1)
+    end
+  end
+
   private
 
   def build_photo(attributes = {})

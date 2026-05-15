@@ -21,6 +21,18 @@ class LikeTest < ActiveSupport::TestCase
     end
   end
 
+  test "database requires user and photo foreign keys" do
+    photo = create_photo
+
+    assert_raises ActiveRecord::NotNullViolation do
+      Like.insert!({ user_id: nil, photo_id: photo.id, created_at: Time.current, updated_at: Time.current })
+    end
+
+    assert_raises ActiveRecord::InvalidForeignKey do
+      Like.insert!({ user_id: users(:one).id, photo_id: -1, created_at: Time.current, updated_at: Time.current })
+    end
+  end
+
   test "broadcasts like count after create and destroy" do
     photo = create_photo
 

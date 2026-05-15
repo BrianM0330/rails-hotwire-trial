@@ -16,6 +16,26 @@ class CommentTest < ActiveSupport::TestCase
     assert_includes comment.errors[:body], "can't be blank"
   end
 
+  test "database requires body" do
+    photo = create_photo
+
+    assert_raises ActiveRecord::NotNullViolation do
+      Comment.insert!({ user_id: users(:one).id, photo_id: photo.id, body: nil, created_at: Time.current, updated_at: Time.current })
+    end
+  end
+
+  test "database requires valid user and photo foreign keys" do
+    photo = create_photo
+
+    assert_raises ActiveRecord::InvalidForeignKey do
+      Comment.insert!({ user_id: -1, photo_id: photo.id, body: "Nice", created_at: Time.current, updated_at: Time.current })
+    end
+
+    assert_raises ActiveRecord::InvalidForeignKey do
+      Comment.insert!({ user_id: users(:one).id, photo_id: -1, body: "Nice", created_at: Time.current, updated_at: Time.current })
+    end
+  end
+
   test "allows multiple comments from same user on same photo" do
     photo = create_photo
 

@@ -20,7 +20,31 @@ class PhotosControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", "All Photos"
     assert_select "p", text: "Premium Gallery Access", count: 0
     assert_select "img.blur-xl", count: 0
-    assert_select "a[href='#{photo_path(@photo)}']", minimum: 1
+    assert_select "a[href='#{@photo.src_large2x}'][data-pswp-width]", minimum: 1
+    assert_select "#like_photo_#{@photo.id} button[aria-label='Like photo by #{@photo.photographer}']"
+  end
+
+  test "index renders current user's like state, not global like count state" do
+    other_user = users(:two)
+    other_user.likes.create!(photo: @photo)
+    sign_in_as(users(:one))
+
+    get photos_path
+
+    assert_response :success
+    assert_select "#like_photo_#{@photo.id} button[aria-label='Like photo by #{@photo.photographer}'][aria-pressed='false']"
+    assert_select "#like_count_photo_#{@photo.id}", text: "1"
+  end
+
+  test "index renders liked state for photos liked by current user" do
+    user = users(:one)
+    user.likes.create!(photo: @photo)
+    sign_in_as(user)
+
+    get photos_path
+
+    assert_response :success
+    assert_select "#like_photo_#{@photo.id} button[aria-label='Unlike photo by #{@photo.photographer}'][aria-pressed='true']"
   end
 
   test "show redirects unauthenticated users to sign in" do
